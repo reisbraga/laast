@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+    {% set mensagens = get_flashed_messages() %}
+    {% if mensagens %}
+        {% for msg in mensagens %}
+            <div>
+                {{ msg }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <form action="/artigos/editasave" method="post">
+        <input type="hidden" name="id_artigo" value="{{dados.id_artigo}}">
+        <div>
+            <label for="titulo">Título: </label>
+            <input type="text" name="titulo" id="titulo" value="{{dados.titulo}}" required>
+        </div>
+        <div>
+            <label for="ano_lancamento">Ano de lançamento: </label>
+            <input type="text" name="ano_lancamento" id="ano_lancamento" value="{{dados.ano_lancamento}}" required>
+        </div>
+        <div>
+            <label for="id_autor">Autor: </label>
+            <select id="id_autor" name="id_autor" required>
+                {% for a in autor %}
+                    {% if a.id_autor == dados.id_autor %}
+                    <option value="{{a.id_autor}}" selected >{{a.nome}}</option>
+                    {% else %}
+                    <option value="{{a.id_autor}}" >{{p.nome}}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        <button type="submit">Salvar</button>
+    </form>
+
+{% endblock %}
